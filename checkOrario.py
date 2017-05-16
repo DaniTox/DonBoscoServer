@@ -10,7 +10,7 @@ link = "http://www.donboscobrescia.it/file/orario.pdf"
 
 def main(argv):
     try:
-        asd = open("/etc/chancheOrarioPdf/md5save.txt", 'r')
+        asd = open("/etc/checkOrarioPdf/md5save.txt", 'r')
         md5Attuale = asd.read()
         asd.close()
     except:
@@ -29,7 +29,7 @@ def main(argv):
             if not(md5generato == md5Attuale):
                 md5Attuale = md5generato
                 print("md5 diverso. Mando notifica...")
-                a = open("/etc/chancheOrarioPdf/md5save.txt", 'w')
+                a = open("/etc/checkOrarioPdf/md5save.txt", 'w')
                 a.write(md5Attuale)
                 time.sleep(10)
             else:
