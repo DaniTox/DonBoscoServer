@@ -7,36 +7,47 @@ import datiFirebase
 HOST = datiFirebase.HOST
 PORT = datiFirebase.PORT
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-print ("Socket creato")
+def main():
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    print ("Socket creato")
 
-try:
-	s.bind((HOST, PORT))
-except socket.error as msg:
-	print("Failed. Error Code: " + str(msg[0]) + msg[1])
-	sys.exit()
+    try:
+	   s.bind((HOST, PORT))
+    except socket.error as msg:
+	   print("Failed. Error Code: " + str(msg[0]) + msg[1])
+	   sys.exit()
 
-print "Socket Bind Completato"
+    print "Socket Bind Completato"
 
-s.listen(5)
-print("Il Socket sta ascoltando...")
+    s.listen(5)
+    print("Il Socket sta ascoltando...")
 
-def clientthread(conn): 
-    data = conn.recv(1024)
-    print(data)
-    if data == "ping\n":
-        reply = "True\n"
-    else:
-        is_valid = validate_email(data,verify=True)
-        reply = is_valid
-    
-    conn.sendall(str(reply))
-    conn.close()
+    def clientthread(conn): 
+        data = conn.recv(1024)
+        print(data)
+
+        if data == "ping\n":
+            reply = "True\n"
+        else:
+            is_valid = validate_email(data,verify=True)
+            reply = is_valid
+        
+        with open(".mail.log", 'w') as f:
+            f.write("\n\nData ricevuto: " + data +  "Risposta: " + str(reply))
+
+        conn.sendall(str(reply))
+        conn.close()
  
-while 1:
-    conn, addr = s.accept()
-    print 'Connesso con ' + addr[0] + ':' + str(addr[1])
+    while 1:
+        conn, addr = s.accept()
+        print 'Connesso con ' + addr[0] + ':' + str(addr[1])
      
-    start_new_thread(clientthread ,(conn,))
+        start_new_thread(clientthread ,(conn,))
  
-s.close()
+    s.close()
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\nMi chiudo...\n")
