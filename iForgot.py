@@ -50,10 +50,10 @@ def main(argv):
 				mail = user.val()["E-Mail"]
 				code = user.val()["Codice"]
 				try:
-					f = open("/Documents/testLog.txt", 'r')
+					f = open("/home/pi/Documents/testLog.txt", 'r')
 				except:
-					os.system("touch /Documents/testLog.txt")
-					f = open("/Documents/testLog.txt", 'r')
+					os.system("touch /home/pi/Documents/testLog.txt")
+					f = open("/home/pi/Documents/testLog.txt", 'r')
 				f.write(mail + " - " + code)
 				try:
 					sendMail(mail, code)
