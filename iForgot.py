@@ -54,7 +54,7 @@ def main(argv):
 				except:
 					os.system("touch /home/pi/Documents/testLog.txt")
 					f = open("/home/pi/Documents/testLog.txt", 'r')
-				f.write(mail + " - " + code)
+				f.write(mail + " - " + str(code))
 				try:
 					sendMail(mail, code)
 					f.write("Mail inviata con successo\n\n")
