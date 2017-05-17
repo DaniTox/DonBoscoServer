@@ -57,10 +57,10 @@ def main(argv):
 				f.write(mail + " - " + code)
 				try:
 					sendMail(mail, code)
-					f.write("Mail inviata con successo")
+					f.write("Mail inviata con successo\n\n")
 					f.close()
 				except:
-					f.write("invio mail non riuscito")
+					f.write("invio mail non riuscito\n\n")
 					f.close()
 				
 				db.child("Utenti").child(user.val()["Username"]).child("iForgot_sent").set(True)
