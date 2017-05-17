@@ -6,6 +6,7 @@ from email.MIMEText import MIMEText
 import time
 import json
 import datiFirebase
+import os
 
 
 
@@ -48,7 +49,20 @@ def main(argv):
 			if user.val()["iForgot"] == True and user.val()["iForgot_sent"] == False:
 				mail = user.val()["E-Mail"]
 				code = user.val()["Codice"]
-				sendMail(mail, code)
+				try:
+					f = open("/Documents/testLog.txt", 'r')
+				except:
+					os.system("touch /Documents/testLog.txt")
+					f = open("/Documents/testLog.txt", 'r')
+				f.write(mail + " - " + code)
+				try:
+					sendMail(mail, code)
+					f.write("Mail inviata con successo")
+					f.close()
+				except:
+					f.write("invio mail non riuscito")
+					f.close()
+				
 				db.child("Utenti").child(user.val()["Username"]).child("iForgot_sent").set(True)
 			else:
 				pass	
