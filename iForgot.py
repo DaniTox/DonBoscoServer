@@ -34,10 +34,10 @@ def sendMail(mailReceiver, code):
 
 
 def main(argv):
-	if (len(argv) < 2):
-		print("Usage: python iForgot.py [time to sleep]")
-		quit()
-	
+#	if (len(argv) < 2):
+#		print("Usage: python iForgot.py [time to sleep]")
+#		quit()
+	 
 
 	firebase = pyrebase.initialize_app(config)
 	db = firebase.database()
@@ -66,7 +66,7 @@ def main(argv):
 			else:
 				pass	
 		
-		time.sleep(float(argv[1]))
+		time.sleep(5)
 			
 
 
