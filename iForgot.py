@@ -4,7 +4,6 @@ import smtplib
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
 import time
-import json
 import datiFirebase
 import os
 
@@ -74,4 +73,13 @@ def main(argv):
 			
 
 if __name__ == "__main__":
-	main(sys.argv)
+	try:
+		main(sys.argv)
+	except KeyboardInterrupt:
+		print("\nRicevuto segnale di chiusura. Mi chiudo...")
+		time.sleep(0.5)
+		quit()
+	except:
+		print("Errore server. Ora aspetto 10 decondi e riprovo")
+		time.sleep(10)
+		main(sys.argv)

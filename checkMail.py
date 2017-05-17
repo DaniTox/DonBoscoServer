@@ -24,8 +24,11 @@ print("Il Socket sta ascoltando...")
 def clientthread(conn): 
     data = conn.recv(1024)
     print(data)
-    is_valid = validate_email(data,verify=True)
-    reply = is_valid
+    if data == "ping\n":
+        reply = "True\n"
+    else:
+        is_valid = validate_email(data,verify=True)
+        reply = is_valid
     
     conn.sendall(str(reply))
     conn.close()
