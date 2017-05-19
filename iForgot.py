@@ -49,18 +49,16 @@ def main(argv):
 				mail = user.val()["E-Mail"]
 				code = user.val()["Codice"]
 				try:
-					f = open("/home/pi/Documents/testLog.txt", 'r')
+					f = open(".testLog.txt", 'w')
 				except:
-					os.system("touch /home/pi/Documents/testLog.txt")
-					f = open("/home/pi/Documents/testLog.txt", 'r')
-				f.write(mail + " - " + str(code))
-				try:
-					sendMail(mail, code)
-					f.write("Mail inviata con successo\n\n")
-					f.close()
-				except:
-					f.write("invio mail non riuscito\n\n")
-					f.close()
+					os.system("touch .testLog.txt")
+					f = open(".testLog.txt", 'w')
+				f.write(mail + " - " + str(code) + "\n")
+				
+				sendMail(mail, code)
+				f.write("Mail inviata con successo\n\n")
+				f.close()
+				
 				
 				db.child("Utenti").child(user.val()["Username"]).child("iForgot_sent").set(True)
 			else:

@@ -3,6 +3,7 @@ import time
 import hashlib
 import requests
 import sys
+import os
 
 
 link = "http://www.donboscobrescia.it/file/orario.pdf"  
@@ -10,12 +11,13 @@ link = "http://www.donboscobrescia.it/file/orario.pdf"
 
 def main(argv):
     try:
-        asd = open("/etc/checkOrarioPdf/md5save.txt", 'r')
+        asd = open(".md5save.txt", 'r')
         md5Attuale = asd.read()
         asd.close()
     except:
         print("Errore, il file non esiste")
         md5Attuale = ""
+        os.system("touch .md5save.txt")
 
     while True:
         response = requests.get(link)
@@ -29,12 +31,12 @@ def main(argv):
             if not(md5generato == md5Attuale):
                 md5Attuale = md5generato
                 print("md5 diverso. Mando notifica...")
-                a = open("/etc/checkOrarioPdf/md5save.txt", 'w')
+                a = open(".md5save.txt", 'w')
                 a.write(md5Attuale)
-                time.sleep(10)
+                time.sleep(20)
             else:
                 print("md5 uguali. L'orario non e stato cambiato")
-                time.sleep(10)
+                time.sleep(20)
         
 
 if __name__ == "__main__":
