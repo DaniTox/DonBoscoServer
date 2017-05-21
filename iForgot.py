@@ -26,10 +26,10 @@ def sendMail(mailReceiver, code):
 	msg.attach(MIMEText(body, 'plain'))
 	
 	text = msg.as_string()
-	try:
-		server.sendmail(datiFirebase.mailGmail, mailReceiver, text)
-	except:
-		print("Error sending email")
+#	try:
+	server.sendmail(datiFirebase.mailGmail, mailReceiver, text)
+#	except:
+#		print("Error sending email")
 
 
 
@@ -53,7 +53,7 @@ def main(argv):
 				except:
 					os.system("touch .testLog.txt")
 					f = open(".testLog.txt", 'w')
-				f.write(mail + " - " + str(code) + "\n")
+				f.write(mail + " - " + str(code) + " - ")
 				
 				sendMail(mail, code)
 				f.write("Mail inviata con successo\n\n")
