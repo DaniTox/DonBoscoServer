@@ -6,6 +6,7 @@ from email.MIMEText import MIMEText
 import time
 import datiFirebase
 import os
+from thread import *
 
 
 
@@ -14,6 +15,18 @@ config = datiFirebase.config
 server = smtplib.SMTP("smtp.gmail.com", 587)
 server.starttls()
 server.login(datiFirebase.mailGmail, datiFirebase.passwordGmail)
+
+
+
+def waitAndClose(timez):
+	time.sleep(20)
+	os.system("./revive.sh")
+	time.sleep(2)
+	print("Scaduto il tempo. Esco...")
+	quit()
+
+
+
 
 
 def sendMail(mailReceiver, code):
@@ -37,7 +50,7 @@ def main(argv):
 #	if (len(argv) < 2):
 #		print("Usage: python iForgot.py [time to sleep]")
 #		quit()
-	 
+	start_new_thread(waitAndClose, (5,))
 
 	firebase = pyrebase.initialize_app(config)
 	db = firebase.database()
