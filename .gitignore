@@ -8,3 +8,5 @@ datiFirebase.py
 .md5save.txt
 
 .testLog.txt
+
+*.out
