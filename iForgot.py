@@ -18,17 +18,6 @@ server.login(datiFirebase.mailGmail, datiFirebase.passwordGmail)
 
 
 
-def waitAndClose(timez):
-	time.sleep(20)
-	os.system("./revive.sh")
-	time.sleep(2)
-	print("Scaduto il tempo. Esco...")
-	quit()
-
-
-
-
-
 def sendMail(mailReceiver, code):
 	msg = MIMEMultipart()
 	msg['From'] = datiFirebase.mailGmail
@@ -50,7 +39,7 @@ def main(argv):
 #	if (len(argv) < 2):
 #		print("Usage: python iForgot.py [time to sleep]")
 #		quit()
-	start_new_thread(waitAndClose, (5,))
+	
 
 	firebase = pyrebase.initialize_app(config)
 	db = firebase.database()
@@ -74,6 +63,7 @@ def main(argv):
 				
 				
 				db.child("Utenti").child(user.val()["Username"]).child("iForgot_sent").set(True)
+				time.sleep(2)
 			else:
 				pass	
 		
